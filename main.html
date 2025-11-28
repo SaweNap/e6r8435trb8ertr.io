@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Казино</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #2c2f33;
+    color: #fff;
+    overflow: hidden;
+    /* Фон изображение */
+    background-image: url("G:\\Рабочие проекты\\CASINO\\op\\2313.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  /* Остальные стили без изменений */
+  .content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Стиль для картинки-кнопки */
+  .image-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+  }
+  /* Стиль для картинки с закругленными углами */
+  .image-button img {
+    width: 300px; /* Размер кнопки, можно изменить */
+    height: auto;
+    margin-top: -350px;
+    margin-left: 1050px;
+    display: block;
+    border-radius: 15px; /* Закругление углов, изменить по желанию */
+  }
+</style>
+<script>
+  // Блокировка Ctrl при колесике мыши
+  window.addEventListener("wheel", function(e) {
+    if (e.ctrlKey) e.preventDefault();
+  }, { passive: false });
+  
+  // Блокировка Ctrl при нажатии клавиш
+  window.addEventListener("keydown", function(e) {
+    if (e.ctrlKey) {
+      e.preventDefault();
+    }
+  });
+</script>
+</head>
+<body>
+
+<div class="content">
+  <!-- Вставляем кнопку в виде картинки, которая переводит на другой сайт -->
+  <button class="image-button" onclick="window.location.href='https://github.com/SaweNap/d/blob/main/black.html'">
+    <img src="BlackJack.jpg" alt="Перейти" />
+  </button>
+</div>
+
+</body>
+</html>
