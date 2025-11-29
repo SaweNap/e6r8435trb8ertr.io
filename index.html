@@ -14,12 +14,14 @@
     background-color: #2c2f33;
     color: #fff;
     overflow: hidden;
+    /* Фон изображение */
     background-image: url("https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/2313.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
   }
 
+  /* Основной контейнер контента */
   .content {
     flex: 1;
     display: flex;
@@ -32,33 +34,39 @@
 
   /* Стиль для кнопки */
   .image-button {
-    position: fixed;
-    top: 90px;
-    right: 110px;
+    position: fixed; /* фиксированное позиционирование */
+    top: 90px;       /* отступ сверху */
+    right: 110px;     /* отступ справа */
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
     outline: none;
-    z-index: 1000;
+    z-index: 1000; /* чтобы было сверху */
   }
 
-  /* Сделать изображение очень большим и без ограничений */
+  /* Адаптивный стиль для картинки внутри кнопки */
   .image-button img {
-    width: 300px; /* Здесь максимальный размер, сделаю больше */
+    width: 16vw; /* ширина в процентах от ширины окна */
     height: auto;
     border-radius: 15px;
     display: block;
-    transition: width 0.3s ease;
+  }
+
+  /* Медиазапрос для еще меньших экранов, если нужно */
+  @media (max-width: 600px) {
+    .image-button img {
+      width: 15vw; /* чуть больше при очень маленьких экранах */
+    }
   }
 </style>
 <script>
-  // Блокировка Ctrl + колесико мыши
+  // Блокировка Ctrl при колесике мыши
   window.addEventListener("wheel", function(e) {
     if (e.ctrlKey) e.preventDefault();
   }, { passive: false });
   
-  // Блокировка Ctrl + клавиши
+  // Блокировка Ctrl при нажатии клавиш
   window.addEventListener("keydown", function(e) {
     if (e.ctrlKey) {
       e.preventDefault();
@@ -69,7 +77,7 @@
 <body>
 
 <div class="content">
-  <!-- Кнопка с изображением, которая переходит на другой сайт -->
+  <!-- Вставляем кнопку в виде картинки, которая переводит на другой сайт -->
   <button class="image-button" onclick="window.location.href='https://sawenap.github.io/d6ftgb8ertgf.io/'">
     <img src="BlackJack.jpg" alt="Перейти" />
   </button>
