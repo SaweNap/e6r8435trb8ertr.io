@@ -43,9 +43,9 @@
     z-index: 1000;
   }
 
-  /* Адаптивный размер изображения с ограничениями */
+  /* Размер изображения с ограничениями для большего масштаба */
   .image-button img {
-    width: clamp(50px, 16vw, 150px);
+    width: clamp(80px, 20vw, 200px);
     height: auto;
     border-radius: 15px;
     display: block;
@@ -55,7 +55,7 @@
   /* Медиазапрос для очень маленьких экранов */
   @media (max-width: 600px) {
     .image-button img {
-      width: clamp(50px, 15vw, 120px);
+      width: clamp(50px, 15vw, 150px);
     }
   }
 </style>
