@@ -43,20 +43,13 @@
     z-index: 1000;
   }
 
-  /* Размер изображения с ограничениями для большего масштаба */
+  /* Сделать изображение очень большим и без ограничений */
   .image-button img {
-    width: clamp(80px, 20vw, 200px);
+    width: 300px; /* Здесь максимальный размер, сделаю больше */
     height: auto;
     border-radius: 15px;
     display: block;
     transition: width 0.3s ease;
-  }
-
-  /* Медиазапрос для очень маленьких экранов */
-  @media (max-width: 600px) {
-    .image-button img {
-      width: clamp(50px, 15vw, 150px);
-    }
   }
 </style>
 <script>
