@@ -2,575 +2,89 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>Блэкджек Онлайн</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Казино</title>
 <style>
   body {
-    margin: 0; padding: 0; overflow: hidden;
-    height: 100vh; width: 100vw;
+    margin: 0;
     font-family: Arial, sans-serif;
-    background: none;
-  }
-  #scalingContainer {
-    transform-origin: top left;
-    transition: transform 0.2s ease;
-    width: 1280px; height: 720px;
-  }
-  body::before {
-    content: "";
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-image: url('231.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    z-index: -1;
-  }
-
-  h1 {
-    text-align: center;
-    margin: 0 0 20px 0;
-    font-size: 24px;
-  }
-
-  #deck {
-    position: fixed;
-    top: 300px;
-    right: 800px;
-    width: 60px;
-    height: 90px;
-    border-radius: 6px;
-    border: 2px solid #222;
-    cursor: pointer;
-    z-index: 999;
-    background-image: url('321.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  .dealerContainer, .handContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-  #dealerScore {
-    font-size: 20px;
-    margin-bottom: 5px;
-    margin-top: 150px;
-    margin-left: 130px;
-  }
-
-  #playerScore {
-    font-size: 20px;
-    margin-bottom: 5px;
-    margin-top: 30px;
-    margin-left: 130px;
-  }
-
-  .handTitle {
-    font-size: 20px;
-    margin-bottom: 5px;
-    margin-top: -60px;
-    margin-left: 130px;
-  }
-
-  .handTitlePlay {
-    font-size: 20px;
-    margin-bottom: 5px;
-    margin-top: 310px;
-    margin-left: 130px;
-  }
-
-  #dealerHand {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    margin-left: 5px;
-    gap: 10px;
-  }
-
-  #playerHand {
-    display: flex;
-    justify-content: center;
-    margin-top: -180px;
-    margin-left: 5px;
-    gap: 10px;
-  }
-
-  .slots {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: -45px;
-    margin-left: 130px;
-  }
-
-  .slot {
-    width: 50px;
-    height: 80px;
-    background: transparent;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 6px;
-    box-sizing: border-box;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    margin-top: 55px;
-  }
-
-  .slot:hover {
-    border-color: rgba(255,255,255,0.6);
-    box-shadow: 0 0 8px rgba(255,255,255,0.5);
-  }
-
-  .card {
-    width: 50px;
-    height: 80px;
-    background: rgb(255, 255, 255);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: bold;
-    color: #000000;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-    cursor: pointer;
-    opacity: 0;
-    transition: all 0.4s ease;
-    backface-visibility: hidden;
-    position: relative;
-    margin-top: -2px;
-    margin-left: -2px;
-  }
-
-  .card.show {
-    opacity: 1;
-  }
-
-  #controls {
-    margin-top: 340px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: -240px;
-    margin-left: 120px;
-  }
-
-  button {
-    padding: 8px 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background: #00500be0;
+    height: 100vh;
+    background-color: #2c2f33;
     color: #fff;
-    transition: background 0.3s;
+    overflow: hidden;
+    background-image: url("https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/2313.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 
-  button:hover {
-    background: #0077107e;
+  /* Основной контейнер контента */
+  .content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2vw; /* масштабируем шрифт по ширине */
+    position: relative;
+    z-index: 1;
   }
 
-  #btnNewGame:disabled {
-    background: #000000;
-    cursor: not-allowed;
+  /* Стиль для кнопки */
+  .image-button {
+    position: fixed; /* фиксированное позиционирование */
+    top: 10%; /* относительный отступ сверху */
+    right: 8%; /* относительный отступ справа */
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    z-index: 1000; /* чтобы было сверху */
   }
 
-  #result {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-30%, -430%);
-    font-size: 40px;
-    font-weight: bold;
-    text-align: center;
-    z-index: 9999;
-    display: none;
-    padding: 20px;
-    border-radius: 10px;
+  /* Адаптивный стиль для картинки внутри кнопки */
+  .image-button img {
+    width: 30vw; /* увеличили ширину в процентах от ширины окна */
+    max-width: 250px; /* увеличили максимум размера */
+    height: auto;
+    border-radius: 15px;
+    display: block;
   }
 
-  #result.win { color: limegreen; }
-  #result.lose { color: red; }
-  #result.draw { color: yellow; }
-
-  @media(max-width: 768px) {
-    #scalingContainer {
-      width: 100%;
-      height: auto;
+  /* Медиазапрос для очень маленьких экранов */
+  @media (max-width: 400px) {
+    .image-button img {
+      width: 35vw; /* чуть больше на очень маленьких экранах */
+    }
+    .content {
+      font-size: 4vw; /* масштабируем шрифт */
     }
   }
 </style>
+<script>
+  // Блокировка Ctrl при колесике мыши
+  window.addEventListener("wheel", function(e) {
+    if (e.ctrlKey) e.preventDefault();
+  }, { passive: false });
+  
+  // Блокировка Ctrl при нажатии клавиш
+  window.addEventListener("keydown", function(e) {
+    if (e.ctrlKey) {
+      e.preventDefault();
+    }
+  });
+</script>
 </head>
 <body>
-<div id="scalingContainer">
-<!-- Весь ваш HTML контент -->
-<audio id="dealSound" src="black.mp3" preload="auto"></audio>
 
-<div id="deck"></div>
-<div class="dealerContainer">
-  <div id="dealerScore">Очки: 0</div>
-  <div class="handTitle">Карты Диллера</div>
-  <div id="dealerHand" class="hand">
-    <div id="dealerSlots" class="slots"></div>
-  </div>
-</div>
-<div class="handContainer">
-  <div class="handTitlePlay">Ваши карты</div>
-  <div id="playerHand" class="hand">
-    <div id="playerSlots" class="slots"></div>
-  </div>
-  <div class="score" id="playerScore">Очки: 0</div>
-</div>
-<div id="controls">
-  <button id="btnHit">Берешь карту</button>
-  <button id="btnStand">Стоять</button>
-  <button id="btnNewGame">Новая игра</button>
-</div>
-<div id="result"></div>
+<div class="content">
+  <!-- Вставляем кнопку в виде картинки, которая переводит на другой сайт -->
+  <button class="image-button" onclick="window.location.href='https://sawenap.github.io/d6ftgb8ertgf.io/'">
+    <img src="https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/BlackJack.jpg" alt="Перейти" />
+  </button>
 </div>
 
-<script>
-const suits = ['♠', '♥', '♦', '♣'];
-const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-
-function getSuitColor(suitSymbol) {
-  if (suitSymbol === '♥' || suitSymbol === '♦') {
-    return 'red';
-  } else {
-    return 'black';
-  }
-}
-
-let deck = [];
-let playerHand = [];
-let dealerHand = [];
-let dealerCardCount = 0;
-let gameOver = false;
-let isAnimating = false;
-
-const dealSound = document.getElementById('dealSound');
-
-const dealerSlots = document.getElementById('dealerSlots');
-const playerSlots = document.getElementById('playerSlots');
-const dealerScoreDiv = document.getElementById('dealerScore');
-const playerScoreDiv = document.getElementById('playerScore');
-const resultDiv = document.getElementById('result');
-const btnNewGame = document.getElementById('btnNewGame');
-
-document.getElementById('btnHit').onclick = () => {
-  if (isAnimating || gameOver) return;
-  dealSound.currentTime=0;
-  dealSound.play();
-  hit();
-};
-document.getElementById('btnStand').onclick = () => {
-  if (isAnimating || gameOver) return;
-  stand();
-};
-document.getElementById('btnNewGame').onclick = () => { if (gameOver) startGame(); };
-
-function createDeck() {
-  deck = [];
-  for (let suit of suits) {
-    for (let rank of ranks) {
-      deck.push({suit, rank});
-    }
-  }
-  shuffle(deck);
-}
-function shuffle(array) {
-  for (let i = array.length -1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i+1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-function createSlots() {
-  dealerSlots.innerHTML = '';
-  for (let i=0; i<5; i++) {
-    const slot = document.createElement('div');
-    slot.className = 'slot';
-    dealerSlots.appendChild(slot);
-  }
-  playerSlots.innerHTML = '';
-  for (let i=0; i<5; i++) {
-    const slot = document.createElement('div');
-    slot.className = 'slot';
-    playerSlots.appendChild(slot);
-  }
-}
-
-function startGame() {
-  createDeck();
-  playerHand = [];
-  dealerHand = [];
-  dealerCardCount=0;
-  gameOver = false;
-  resultDiv.style.display='none';
-  btnNewGame.disabled=false;
-  createSlots();
-  renderHands();
-  updateScores();
-}
-
-function drawCard() {
-  return deck.pop();
-}
-
-function renderHands() {
-  const dealerSlotsDom = document.querySelectorAll('#dealerSlots .slot');
-  const playerSlotsDom = document.querySelectorAll('#playerSlots .slot');
-  dealerSlotsDom.forEach(s=>s.innerHTML='');
-  playerSlotsDom.forEach(s=>s.innerHTML='');
-  for (let i=0; i<dealerHand.length; i++) {
-    placeCardInSlot(dealerHand[i], dealerSlotsDom[i]);
-  }
-  for (let i=0; i<playerHand.length; i++) {
-    placeCardInSlot(playerHand[i], playerSlotsDom[i]);
-  }
-}
-
-function createCardElement(card) {
-  const div=document.createElement('div');
-  div.className='card';
-  div.innerHTML=`${card.rank}${card.suit}`;
-  div.style.color=getSuitColor(card.suit);
-  setTimeout(()=>{ div.classList.add('show'); },50);
-  return div;
-}
-
-function placeCardInSlot(card, slot) {
-  const cardDiv = createCardElement(card);
-  slot.innerHTML='';
-  slot.appendChild(cardDiv);
-  setTimeout(()=>{ cardDiv.classList.add('show'); },50);
-}
-
-function animateCardToSlot(card, targetSlot, callback) {
-  isAnimating = true;
-  const cardDiv = createCardElement(card);
-  document.body.appendChild(cardDiv);
-  const deckRect = document.getElementById('deck').getBoundingClientRect();
-  const slotRect = targetSlot.getBoundingClientRect();
-
-  cardDiv.style.position='fixed';
-  cardDiv.style.left=(deckRect.left+deckRect.width/2-25)+'px';
-  cardDiv.style.top=(deckRect.top+deckRect.height/2-40)+'px';
-  cardDiv.style.zIndex=999;
-
-  const deltaX=slotRect.left+slotRect.width/2 - (deckRect.left+deckRect.width/2);
-  const deltaY=slotRect.top+slotRect.height/2 - (deckRect.top+deckRect.height/2);
-  const scaleX=slotRect.width/50;
-  const scaleY=slotRect.height/80;
-
-  requestAnimationFrame(()=>{
-    cardDiv.style.transition='transform 0.8s ease-in-out';
-    cardDiv.style.transform=`translate(${deltaX}px, ${deltaY}px) scale(${scaleX}, ${scaleY})`;
-  });
-
-  cardDiv.addEventListener('transitionend', ()=>{
-    targetSlot.innerHTML='';
-    const newCardEl = createCardElement(card);
-    newCardEl.style.position='relative';
-    newCardEl.style.left='';
-    newCardEl.style.top='';
-    newCardEl.style.transform='';
-    newCardEl.style.transition='';
-    targetSlot.appendChild(newCardEl);
-    document.body.removeChild(cardDiv);
-    isAnimating = false;
-    if (callback) callback();
-  });
-}
-
-function updateScores() {
-  document.getElementById('playerScore').innerText='Очки: '+calculateScore(playerHand);
-  document.getElementById('dealerScore').innerText='Очки: '+calculateScore(dealerHand);
-}
-
-function dealCardToPlayer() {
-  const card = drawCard();
-  playerHand.push(card);
-  updateScores();
-  const pSlots = document.querySelectorAll('#playerSlots .slot');
-  let pTargetIndex=Array.from(pSlots).findIndex(s=>s.children.length===0);
-  if (pTargetIndex===-1) pTargetIndex=0;
-  animateCardInSlot(card, pSlots[pTargetIndex]);
-}
-
-function dealCardToDealer() {
-  const card = drawCard();
-  dealerHand.push(card);
-  dealerCardCount++;
-  updateScores();
-  const dSlots = document.querySelectorAll('#dealerSlots .slot');
-  let dTargetIndex=Array.from(dSlots).findIndex(s=>s.children.length===0);
-  if (dTargetIndex===-1) dTargetIndex=0;
-  animateCardInSlot(card, dSlots[dTargetIndex]);
-}
-
-function hit() {
-  if (gameOver || isAnimating) return;
-  dealSound.currentTime=0;
-  dealSound.play();
-  dealCardToPlayer();
-  if (calculateScore(playerHand) > 21) endGame();
-}
-
-function stand() {
-  if (gameOver || isAnimating) return;
-  // Логика дилера
-  const dealerSlotsDom = document.querySelectorAll('#dealerSlots .slot');
-  dealerSlotsDom.forEach((s,i)=>{
-    s.innerHTML='';
-    if (dealerHand[i]) s.appendChild(createCardElement(dealerHand[i]));
-  });
-  updateScores();
-
-  function dealerTurn() {
-    const pScore=calculateScore(playerHand);
-    let dScore=calculateScore(dealerHand);
-    if (dScore===17) {
-      if (Math.random()<0.8) {
-        const possibleCards=[
-          {suit:suits[Math.floor(Math.random()*suits.length)], rank:'2'},
-          {suit:suits[Math.floor(Math.random()*suits.length)], rank:'3'},
-          {suit:suits[Math.floor(Math.random()*suits.length)], rank:'4'},
-          {suit:suits[Math.floor(Math.random()*suits.length)], rank:'5'}
-        ];
-        const card=possibleCards[Math.floor(Math.random()*possibleCards.length)];
-        dealSound.currentTime=0; dealSound.play();
-        dealerCardCount++;
-        const slots=document.querySelectorAll('#dealerSlots .slot');
-        let targetIndex=Array.from(slots).findIndex(s=>s.children.length===0);
-        if (targetIndex===-1) targetIndex=0;
-        animateCardToSlot(card, slots[targetIndex], ()=> {
-          dealerHand.push(card);
-          updateScores();
-          endGame();
-        });
-        return;
-      } else {
-        endGame();
-        return;
-      }
-    }
-    if (dScore<17 || (dScore===17 && dealerHand.length<5)) {
-      const suitSymbol=suits[Math.floor(Math.random()*suits.length)];
-      const ranksForCard=['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
-      const rankIdx=Math.floor(Math.random()*ranksForCard.length);
-      const rank=ranksForCard[rankIdx];
-      if (dScore===17 && (rank!=='2' && rank!=='3')) { endGame(); return; }
-      const card={suit:suitSymbol, rank:rank};
-      dealSound.currentTime=0; dealSound.play();
-      dealerCardCount++;
-      const slots=document.querySelectorAll('#dealerSlots .slot');
-      let targetIndex=Array.from(slots).findIndex(s=>s.children.length===0);
-      if (targetIndex===-1) targetIndex=0;
-      animateCardToSlot(card, slots[targetIndex], ()=> {
-        dealerHand.push(card);
-        updateScores();
-        setTimeout(dealerTurn,700);
-      });
-      return;
-    }
-    endGame();
-  }
-  dealerTurn();
-}
-
-function endGame() {
-  gameOver=true;
-  const dealerSlotsDom=document.querySelectorAll('#dealerSlots .slot');
-  dealerSlotsDom.forEach((s,i)=> {
-    s.innerHTML='';
-    if (dealerHand[i]) s.appendChild(createCardElement(dealerHand[i]));
-  });
-  updateScores();
-
-  const pScore=calculateScore(playerHand);
-  const dScore=calculateScore(dealerHand);
-  let message='';
-  let resultClass='';
-
-  if (pScore>21) { message='Вы проиграли!'; resultClass='lose'; }
-  else if (dScore>21) { message='Вы выиграли!'; resultClass='win'; }
-  else if (pScore>dScore) { message='Вы выиграли!'; resultClass='win'; }
-  else if (pScore<dScore) { message='Вы проиграли!'; resultClass='lose'; }
-  else { message='Ничья!'; resultClass='draw'; }
-
-  document.getElementById('result').innerHTML=message;
-  document.getElementById('result').className=resultClass;
-  document.getElementById('result').style.display='block';
-
-  document.getElementById('btnNewGame').disabled=false;
-}
-
-function calculateScore(hand) {
-  let sum=0;
-  let aces=0;
-  for (let c of hand) {
-    if (['J','Q','K'].includes(c.rank)) sum+=10;
-    else if (c.rank==='A') { sum+=11; aces++; }
-    else sum+=parseInt(c.rank);
-  }
-  while (sum>21 && aces>0) { sum-=10; aces--; }
-  return sum;
-}
-
-// Масштабирование
-function resizeScale() {
-  const container = document.getElementById('scalingContainer');
-  const baseWidth = 1280;
-  const baseHeight = 720;
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
-  const scaleX = windowWidth / baseWidth;
-  const scaleY = windowHeight / baseHeight;
-  const scale = Math.min(scaleX, scaleY);
-  container.style.transform = `scale(${scale})`;
-}
-
-// Обработчики
-window.addEventListener('resize', resizeScale);
-window.addEventListener('load', resizeScale);
-
-// Блокировка ctrl+колесо
-window.addEventListener("wheel", function(e) {
-  if (e.ctrlKey) e.preventDefault();
-}, { passive: false });
-
-// Игра
-function startGame() {
-  createDeck();
-  playerHand = [];
-  dealerHand = [];
-  dealerCardCount=0;
-  gameOver = false;
-  document.getElementById('result').style.display='none';
-  document.getElementById('btnNewGame').disabled=true;
-  createSlots();
-  renderHands();
-  updateScores();
-}
-
-// Вызов стартовой
-startGame();
-
-// Ваша функция animateCardInSlot - вставьте сюда
-function animateCardInSlot(card, slot, callback) {
-  const cardEl = createCardElement(card);
-  slot.innerHTML='';
-  slot.appendChild(cardEl);
-  setTimeout(()=>{
-    cardEl.classList.add('show');
-    if (callback) setTimeout(callback, 400);
-  },50);
-}
-</script>
 </body>
 </html>
