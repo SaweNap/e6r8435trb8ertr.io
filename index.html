@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>Блэкджек Онлайн</title>
 <style>
   body {
@@ -34,9 +34,12 @@
     font-size: 24px;
   }
 
-  /* Расположение фона и элементов для ПК и мобильных с помощью медиазапросов */
   #deck {
     position: fixed;
+    top: 300px;
+    right: 800px;
+    width: 60px;
+    height: 90px;
     border-radius: 6px;
     border: 2px solid #222;
     cursor: pointer;
@@ -45,25 +48,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    /* По умолчанию для ПК */
-    top: 300px;
-    right: 800px;
-    width: 60px;
-    height: 90px;
   }
 
-  /* Мобильные стили */
-  @media(max-width: 768px) {
-    #deck {
-      bottom: 20px;
-      right: 20px;
-      top: auto;
-      width: 50px;
-      height: 80px;
-    }
-  }
-
-  /* Обертки для контейнеров */
   .dealerContainer, .handContainer {
     display: flex;
     flex-direction: column;
@@ -71,11 +57,9 @@
     width: 100%;
   }
 
-  /* Позиции и размеры для очков и названий */
   #dealerScore {
     font-size: 20px;
     margin-bottom: 5px;
-    /* Расположение для ПК */
     margin-top: 150px;
     margin-left: 130px;
   }
@@ -83,7 +67,6 @@
   #playerScore {
     font-size: 20px;
     margin-bottom: 5px;
-    /* Расположение для ПК */
     margin-top: 30px;
     margin-left: 130px;
   }
@@ -102,28 +85,20 @@
     margin-left: 130px;
   }
 
-  /* Для мобильных корректируем */
-  @media(max-width: 768px) {
-    #dealerScore, #playerScore, .handTitle, .handTitlePlay {
-      margin-left: 20px;
-      margin-top: 10px;
-      font-size: 16px;
-    }
-  }
-
-  #dealerHand, #playerHand {
+  #dealerHand {
     display: flex;
     justify-content: center;
-    gap: 10px;
     margin-top: 30px;
     margin-left: 5px;
+    gap: 10px;
   }
 
-  /* Мобильные корректировки */
-  @media(max-width: 768px) {
-    #dealerHand, #playerHand {
-      margin-top: 10px;
-    }
+  #playerHand {
+    display: flex;
+    justify-content: center;
+    margin-top: -180px;
+    margin-left: 5px;
+    gap: 10px;
   }
 
   .slots {
@@ -131,6 +106,7 @@
     justify-content: center;
     gap: 10px;
     margin-top: -45px;
+    margin-left: 130px;
   }
 
   .slot {
@@ -142,14 +118,6 @@
     box-sizing: border-box;
     transition: border-color 0.3s, box-shadow 0.3s;
     margin-top: 55px;
-  }
-
-  /* Для мобильных */
-  @media(max-width: 768px) {
-    .slot {
-      width: 40px;
-      height: 70px;
-    }
   }
 
   .slot:hover {
@@ -188,14 +156,8 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
-    /* Для мобильных поднимаем чуть выше */
-    margin-top: 20px;
-  }
-
-  @media(max-width: 768px) {
-    #controls {
-      margin-top: 20px;
-    }
+    margin-top: -240px;
+    margin-left: 120px;
   }
 
   button {
@@ -222,7 +184,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-30%, -430%);
     font-size: 40px;
     font-weight: bold;
     text-align: center;
@@ -236,7 +198,6 @@
   #result.lose { color: red; }
   #result.draw { color: yellow; }
 
-  /* Масштабирование для мобильных */
   @media(max-width: 768px) {
     #scalingContainer {
       width: 100%;
@@ -251,7 +212,6 @@
 <audio id="dealSound" src="black.mp3" preload="auto"></audio>
 
 <div id="deck"></div>
-
 <div class="dealerContainer">
   <div id="dealerScore">Очки: 0</div>
   <div class="handTitle">Карты Диллера</div>
@@ -259,7 +219,6 @@
     <div id="dealerSlots" class="slots"></div>
   </div>
 </div>
-
 <div class="handContainer">
   <div class="handTitlePlay">Ваши карты</div>
   <div id="playerHand" class="hand">
@@ -267,13 +226,11 @@
   </div>
   <div class="score" id="playerScore">Очки: 0</div>
 </div>
-
 <div id="controls">
   <button id="btnHit">Берешь карту</button>
   <button id="btnStand">Стоять</button>
   <button id="btnNewGame">Новая игра</button>
 </div>
-
 <div id="result"></div>
 </div>
 
@@ -587,7 +544,24 @@ window.addEventListener("wheel", function(e) {
   if (e.ctrlKey) e.preventDefault();
 }, { passive: false });
 
-// Ваша функция animateCardInSlot
+// Игра
+function startGame() {
+  createDeck();
+  playerHand = [];
+  dealerHand = [];
+  dealerCardCount=0;
+  gameOver = false;
+  document.getElementById('result').style.display='none';
+  document.getElementById('btnNewGame').disabled=true;
+  createSlots();
+  renderHands();
+  updateScores();
+}
+
+// Вызов стартовой
+startGame();
+
+// Ваша функция animateCardInSlot - вставьте сюда
 function animateCardInSlot(card, slot, callback) {
   const cardEl = createCardElement(card);
   slot.innerHTML='';
@@ -597,10 +571,6 @@ function animateCardInSlot(card, slot, callback) {
     if (callback) setTimeout(callback, 400);
   },50);
 }
-
-// Инициализация игры
-startGame();
-
 </script>
 </body>
 </html>
