@@ -2,62 +2,20 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>Блэкджек Онлайн</title>
 <style>
   body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
+    margin: 0; padding: 0; overflow: hidden;
+    height: 100vh; width: 100vw;
     font-family: Arial, sans-serif;
-    /* Фон как во втором примере */
-    background-image: url('https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/2313.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  }
-
-  /* Фиксированные кнопки */
-  .buttons-fixed {
-    position: fixed;
-    top: 10%;
-    right: 8%;
-    z-index: 1000;
-  }
-  #btnNewGame {
     background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
   }
-  #btnNewGame img {
-    width: 150px; /* размер изображения кнопки */
-    height: auto;
-    border-radius: 15px;
-    display: block;
-  }
-
-  /* Остальные кнопки (по желанию) — фиксированные, например, внизу или сбоку */
-  #btnHit, #btnStand {
-    position: fixed;
-    bottom: 10%;
-  }
-  #btnHit {
-    left: 20%;
-  }
-  #btnStand {
-    left: 40%;
-  }
-
-  /* Остальные стили (оставлю как у вас, только уберу лишние margin и т.д.) */
   #scalingContainer {
     transform-origin: top left;
     transition: transform 0.2s ease;
     width: 1280px; height: 720px;
   }
-
   body::before {
     content: "";
     position: fixed; top: 0; left: 0;
@@ -249,14 +207,6 @@
 </style>
 </head>
 <body>
-
-<!-- Фон и фиксированные кнопки -->
-<div class="buttons-fixed">
-  <button id="btnNewGame" onclick="startGame()">
-    <img src="https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/BlackJack.jpg" alt="Новая игра" />
-  </button>
-</div>
-
 <div id="scalingContainer">
 <!-- Весь ваш HTML контент -->
 <audio id="dealSound" src="black.mp3" preload="auto"></audio>
@@ -279,6 +229,7 @@
 <div id="controls">
   <button id="btnHit">Берешь карту</button>
   <button id="btnStand">Стоять</button>
+  <button id="btnNewGame">Новая игра</button>
 </div>
 <div id="result"></div>
 </div>
@@ -339,16 +290,16 @@ function shuffle(array) {
   }
 }
 function createSlots() {
-  dealerSlots.innerHTML=''; 
+  dealerSlots.innerHTML = '';
   for (let i=0; i<5; i++) {
     const slot = document.createElement('div');
-    slot.className='slot';
+    slot.className = 'slot';
     dealerSlots.appendChild(slot);
   }
-  playerSlots.innerHTML='';
+  playerSlots.innerHTML = '';
   for (let i=0; i<5; i++) {
     const slot = document.createElement('div');
-    slot.className='slot';
+    slot.className = 'slot';
     playerSlots.appendChild(slot);
   }
 }
@@ -593,7 +544,24 @@ window.addEventListener("wheel", function(e) {
   if (e.ctrlKey) e.preventDefault();
 }, { passive: false });
 
-// Ваша функция animateCardInSlot
+// Игра
+function startGame() {
+  createDeck();
+  playerHand = [];
+  dealerHand = [];
+  dealerCardCount=0;
+  gameOver = false;
+  document.getElementById('result').style.display='none';
+  document.getElementById('btnNewGame').disabled=true;
+  createSlots();
+  renderHands();
+  updateScores();
+}
+
+// Вызов стартовой
+startGame();
+
+// Ваша функция animateCardInSlot - вставьте сюда
 function animateCardInSlot(card, slot, callback) {
   const cardEl = createCardElement(card);
   slot.innerHTML='';
@@ -603,10 +571,97 @@ function animateCardInSlot(card, slot, callback) {
     if (callback) setTimeout(callback, 400);
   },50);
 }
-
-// Стартовая игра
-startGame();
-
 </script>
+</body>
+</html>
+располаглись как в этом коде
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Казино</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #2c2f33;
+    color: #fff;
+    overflow: hidden;
+    background-image: url("https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/2313.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  /* Основной контейнер контента */
+  .content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2vw; /* масштабируем шрифт по ширине */
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Стиль для кнопки */
+  .image-button {
+    position: fixed; /* фиксированное позиционирование */
+    top: 10%; /* относительный отступ сверху */
+    right: 8%; /* относительный отступ справа */
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    z-index: 1000; /* чтобы было сверху */
+  }
+
+  /* Адаптивный стиль для картинки внутри кнопки */
+  .image-button img {
+    width: 30vw; /* увеличили ширину в процентах от ширины окна */
+    max-width: 250px; /* увеличили максимум размера */
+    height: auto;
+    border-radius: 15px;
+    display: block;
+  }
+
+  /* Медиазапрос для очень маленьких экранов */
+  @media (max-width: 400px) {
+    .image-button img {
+      width: 35vw; /* чуть больше на очень маленьких экранах */
+    }
+    .content {
+      font-size: 4vw; /* масштабируем шрифт */
+    }
+  }
+</style>
+<script>
+  // Блокировка Ctrl при колесике мыши
+  window.addEventListener("wheel", function(e) {
+    if (e.ctrlKey) e.preventDefault();
+  }, { passive: false });
+  
+  // Блокировка Ctrl при нажатии клавиш
+  window.addEventListener("keydown", function(e) {
+    if (e.ctrlKey) {
+      e.preventDefault();
+    }
+  });
+</script>
+</head>
+<body>
+
+<div class="content">
+  <!-- Вставляем кнопку в виде картинки, которая переводит на другой сайт -->
+  <button class="image-button" onclick="window.location.href='https://sawenap.github.io/d6ftgb8ertgf.io/'">
+    <img src="https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/BlackJack.jpg" alt="Перейти" />
+  </button>
+</div>
+
 </body>
 </html>
