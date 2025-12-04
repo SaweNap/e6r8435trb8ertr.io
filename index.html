@@ -62,6 +62,36 @@
       font-size: 4vw; /* масштабируем шрифт */
     }
   }
+
+  /* Стиль для навигационного меню */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    z-index: 999; /* поверх остального, но ниже кнопки */
+  }
+
+  /* Стиль для кнопок меню */
+  .bottom-nav button {
+    background-color: #610000;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    margin: 0 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s;
+  }
+
+  /* Эффект при наведении */
+  .bottom-nav button:hover {
+    background-color: #610000a4;
+  }
 </style>
 <script>
   // Блокировка Ctrl при колесике мыши
@@ -86,6 +116,11 @@
   </button>
 </div>
 
+<!-- Навигационное меню в самом низу -->
+<div class="bottom-nav">
+  <button onclick="window.location.href='игры.html'">Игры</button>
+  <button onclick="window.location.href='профиль.html'">Профиль</button>
+</div>
+
 </body>
 </html>
-
