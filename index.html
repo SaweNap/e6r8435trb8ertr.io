@@ -117,11 +117,11 @@
       const nickname = first_name + (last_name ? ' ' + last_name : '');
 
       // Передача данных через параметры URL
-      const profileUrl = `https://sawenap.github.io/bdbada.io/profile.html?nickname=${encodeURIComponent(nickname)}&username=${encodeURIComponent('@' + username)}&id=${encodeURIComponent(userID)}`;
+      const profileUrl = `https://sawenap.github.io/bdbada.io/?nickname=${encodeURIComponent(nickname)}&username=${encodeURIComponent('@' + username)}&id=${encodeURIComponent(userID)}`;
       window.location.href = profileUrl;
     } else {
       // В случае обычного браузера — просто открыть страницу
-      window.location.href = 'https://sawenap.github.io/bdbada.io/profile.html';
+      window.location.href = 'https://sawenap.github.io/bdbada.io/';
     }
   }
 </script>
