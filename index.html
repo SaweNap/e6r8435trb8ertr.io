@@ -105,6 +105,17 @@
       e.preventDefault();
     }
   });
+
+  // Функция для открытия профиля через WebApp внутри Telegram
+  function openProfile() {
+    if (window.Telegram && window.Telegram.WebApp) {
+      // Запускаем WebApp
+      window.Telegram.WebApp.openWebApp('https://sawenap.github.io/bdbada.io/profile.html');
+    } else {
+      // В обычном браузере — просто переходим по ссылке
+      window.location.href = 'https://sawenap.github.io/bdbada.io/profile.html';
+    }
+  }
 </script>
 </head>
 <body>
@@ -116,9 +127,10 @@
   </button>
 </div>
 
-<!-- Навигационное меню в самом низу -->
+<!-- Навигационное меню -->
 <div class="bottom-nav">
   <button onclick="window.location.href='https://sawenap.github.io/e6r8435trb8ertr.io/'">Игры</button>
+  <!-- Кнопка "Профиль" вызывает WebApp внутри Telegram -->
   <button onclick="window.location.href='https://sawenap.github.io/bdbada.io/'">Профиль</button>
 </div>
 
