@@ -106,12 +106,21 @@
     }
   });
 
-  // Функция для открытия профиля внутри Telegram WebApp
+  // Обновленная функция для открытия профиля внутри Telegram WebApp
   function openProfile() {
     if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.openWebApp('https://sawenap.github.io/bdbada.io/profile.html');
+      const data = window.Telegram.WebApp.initDataUnsafe;
+      const userID = data?.user?.id || '';
+      const username = data?.user?.username || '';
+      const first_name = data?.user?.first_name || '';
+      const last_name = data?.user?.last_name || '';
+      const nickname = first_name + (last_name ? ' ' + last_name : '');
+
+      // Передача данных через параметры URL
+      const profileUrl = `https://sawenap.github.io/bdbada.io/profile.html?nickname=${encodeURIComponent(nickname)}&username=${encodeURIComponent('@' + username)}&id=${encodeURIComponent(userID)}`;
+      window.location.href = profileUrl;
     } else {
-      // В обычном браузере — переходим по ссылке
+      // В случае обычного браузера — просто открыть страницу
       window.location.href = 'https://sawenap.github.io/bdbada.io/profile.html';
     }
   }
@@ -130,7 +139,7 @@
 <div class="bottom-nav">
   <button onclick="window.location.href='https://sawenap.github.io/e6r8435trb8ertr.io/'">Игры</button>
   <!-- Кнопка "Профиль" вызывает WebApp внутри Telegram -->
-  <button onclick="window.location.href='https://sawenap.github.io/bdbada.io/'">Профиль</button>
+  <button onclick="openProfile()">Профиль</button>
 </div>
 
 </body>
