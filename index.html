@@ -106,13 +106,12 @@
     }
   });
 
-  // Функция для открытия профиля через WebApp внутри Telegram
+  // Функция для открытия профиля внутри Telegram WebApp
   function openProfile() {
     if (window.Telegram && window.Telegram.WebApp) {
-      // Запускаем WebApp
       window.Telegram.WebApp.openWebApp('https://sawenap.github.io/bdbada.io/profile.html');
     } else {
-      // В обычном браузере — просто переходим по ссылке
+      // В обычном браузере — переходим по ссылке
       window.location.href = 'https://sawenap.github.io/bdbada.io/profile.html';
     }
   }
@@ -121,7 +120,7 @@
 <body>
 
 <div class="content">
-  <!-- Вставляем кнопку в виде картинки, которая переводит на другой сайт -->
+  <!-- Ваша существующая кнопка -->
   <button class="image-button" onclick="window.location.href='https://sawenap.github.io/d6ftgb8ertgf.io/'">
     <img src="https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/BlackJack.jpg" alt="Перейти" />
   </button>
