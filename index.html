@@ -30,57 +30,31 @@
     </div>
 
     <script>
-      // Инициализация WebApp
-      const tg = window.Telegram.WebApp;
-      tg.ready();
-  
-      // Получаем данные пользователя и СРАЗУ ЖЕ сохраняем их в localStorage
-      const user = tg.initDataUnsafe.user;
-      if (user) {
-          localStorage.setItem('userNickname', user.first_name);
-          localStorage.setItem('userUsername', user.username || 'N/A');
-          localStorage.setItem('userId', user.id);
-      }
-  
-      // Находим кнопки и блоки
-      const profileButton = document.getElementById('profileButton');
-      const mainMenu = document.getElementById('mainMenu');
-      const profileScreen = document.getElementById('profileScreen');
-  
-      // Функция для показа профиля
-      function showProfile() {
-          // Берем данные из localStorage
-          const nickname = localStorage.getItem('userNickname') || 'Неизвестно';
-          const username = localStorage.getItem('userUsername') || 'Неизвестно';
-          const id = localStorage.getItem('userId') || 'Неизвестно';
-  
-          // Заполняем поля на экране профиля
-          document.getElementById('nickname').textContent = `Nickname | ${nickname}`;
-          document.getElementById('username').textContent = `@username | ${username}`;
-          document.getElementById('id').textContent = `ID TG | ${id}`;
-  
-          // Скрываем меню и показываем профиль
-          mainMenu.style.display = 'none';
-          profileScreen.style.display = 'flex';
-          profileScreen.style.flexDirection = 'column';
-          profileScreen.style.alignItems = 'center';
-          profileScreen.style.justifyContent = 'center';
-      }
-  
-      // Функция для возврата в главное меню
-      function showMainMenu() {
-          profileScreen.style.display = 'none';
-          mainMenu.style.display = 'block';
-      }
-  
-      // Вешаем обработчик на кнопку профиля
-      if (profileButton) {
-          profileButton.onclick = showProfile;
-      }
-  
-      // Остальные твои скрипты (блокировка zoom и т.д.)
-      window.addEventListener("wheel", function(e) { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
-      window.addEventListener("keydown", function(e) { if (e.ctrlKey) { e.preventDefault(); } });
-  </script>
+        // Инициализация WebApp
+        const tg = window.Telegram.WebApp;
+        tg.ready(); // Сообщаем Telegram, что приложение готово
+
+        // Получаем данные пользователя
+        const user = tg.initDataUnsafe.user;
+
+        // Находим кнопку профиля
+        const profileButton = document.getElementById('profileButton');
+
+        if (user) {
+    const profileUrl = `https://sawenap.github.io/bdbada.io/?nickname=${encodeURIComponent(user.first_name)}&username=${encodeURIComponent(user.username || 'N/A')}&id=${encodeURIComponent(user.id)}`;
+    // Открывать внутри Telegram
+    profileButton.onclick = function() {
+        tg.openTelegramLink(profileUrl);
+    };
+} else {
+    profileButton.onclick = function() {
+        window.location.href = 'https://sawenap.github.io/bdbada.io/';
+    };
+}
+
+        // Остальные твои скрипты (блокировка zoom и т.д.)
+        window.addEventListener("wheel", function(e) { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
+        window.addEventListener("keydown", function(e) { if (e.ctrlKey) { e.preventDefault(); } });
+    </script>
 </body>
 </html>
