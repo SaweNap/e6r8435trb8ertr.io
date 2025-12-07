@@ -1,146 +1,64 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Казино</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: #2c2f33;
-    color: #fff;
-    overflow: hidden;
-    background-image: url("https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/2313.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  }
-
-  /* Основной контейнер контента */
-  .content {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2vw; /* масштабируем шрифт по ширине */
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Стиль для кнопки */
-  .image-button {
-    position: fixed; /* фиксированное позиционирование */
-    top: 10%; /* относительный отступ сверху */
-    right: 8%; /* относительный отступ справа */
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    outline: none;
-    z-index: 1000; /* чтобы было сверху */
-  }
-
-  /* Адаптивный стиль для картинки внутри кнопки */
-  .image-button img {
-    width: 30vw; /* увеличили ширину в процентах от ширины окна */
-    max-width: 250px; /* увеличили максимум размера */
-    height: auto;
-    border-radius: 15px;
-    display: block;
-  }
-
-  /* Медиазапрос для очень маленьких экранов */
-  @media (max-width: 400px) {
-    .image-button img {
-      width: 35vw; /* чуть больше на очень маленьких экранах */
-    }
-    .content {
-      font-size: 4vw; /* масштабируем шрифт */
-    }
-  }
-
-  /* Стиль для навигационного меню */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 0;
-    z-index: 999; /* поверх остального, но ниже кнопки */
-  }
-
-  /* Стиль для кнопок меню */
-  .bottom-nav button {
-    background-color: #610000;
-    color: #fff;
-    border: none;
-    padding: 12px 24px;
-    margin: 0 40px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1.2em;
-    transition: background-color 0.3s;
-  }
-
-  /* Эффект при наведении */
-  .bottom-nav button:hover {
-    background-color: #610000a4;
-  }
-</style>
-<script>
-  // Блокировка Ctrl при колесике мыши
-  window.addEventListener("wheel", function(e) {
-    if (e.ctrlKey) e.preventDefault();
-  }, { passive: false });
-  
-  // Блокировка Ctrl при нажатии клавиш
-  window.addEventListener("keydown", function(e) {
-    if (e.ctrlKey) {
-      e.preventDefault();
-    }
-  });
-
-  // Обновленная функция для открытия профиля внутри Telegram WebApp
-  function openProfile() {
-    if (window.Telegram && window.Telegram.WebApp) {
-      const data = window.Telegram.WebApp.initDataUnsafe;
-      const userID = data?.user?.id || '';
-      const username = data?.user?.username || '';
-      const first_name = data?.user?.first_name || '';
-      const last_name = data?.user?.last_name || '';
-      const nickname = first_name + (last_name ? ' ' + last_name : '');
-
-      // Передача данных через параметры URL
-      const profileUrl = `https://sawenap.github.io/bdbada.io/?nickname=${encodeURIComponent(nickname)}&username=${encodeURIComponent('@' + username)}&id=${encodeURIComponent(userID)}`;
-      window.location.href = profileUrl;
-    } else {
-      // В случае обычного браузера — просто открыть страницу
-      window.location.href = 'https://sawenap.github.io/bdbada.io/';
-    }
-  }
-</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Казино</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script> <!-- <-- ВАЖНО: Подключаем скрипт Telegram WebApp -->
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; height: 100vh; background-color: #2c2f33; color: #fff; overflow: hidden; background-image: url("https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/2313.png"); background-repeat: no-repeat; background-position: center; background-size: cover; }
+        .content { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 2vw; position: relative; z-index: 1; }
+        .image-button { position: fixed; top: 10%; right: 8%; background: none; border: none; padding: 0; cursor: pointer; outline: none; z-index: 1000; }
+        .image-button img { width: 30vw; max-width: 250px; height: auto; border-radius: 15px; display: block; }
+        @media (max-width: 400px) { .image-button img { width: 35vw; } .content { font-size: 4vw; } }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: center; align-items: center; padding: 10px 0; z-index: 999; }
+        .bottom-nav button { background-color: #610000; color: #fff; border: none; padding: 12px 24px; margin: 0 40px; border-radius: 8px; cursor: pointer; font-size: 1.2em; transition: background-color 0.3s; }
+        .bottom-nav button:hover { background-color: #610000a4; }
+    </style>
 </head>
 <body>
+    <div class="content">
+        <button class="image-button" onclick="window.location.href='https://sawenap.github.io/d6ftgb8ertgf.io/'">
+            <img src="https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/BlackJack.jpg" alt="Перейти" />
+        </button>
+    </div>
+    <!-- Навигационное меню -->
+    <div class="bottom-nav">
+        <button onclick="window.location.href='https://sawenap.github.io/e6r8435trb8ertr.io/'">Игры</button>
+        <!-- Кнопка "Профиль" теперь будет формировать динамическую ссылку -->
+        <button id="profileButton">Профиль</button>
+    </div>
 
-<div class="content">
-  <!-- Ваша существующая кнопка -->
-  <button class="image-button" onclick="window.location.href='https://sawenap.github.io/d6ftgb8ertgf.io/'">
-    <img src="https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/BlackJack.jpg" alt="Перейти" />
-  </button>
-</div>
+    <script>
+        // Инициализация WebApp
+        const tg = window.Telegram.WebApp;
+        tg.ready(); // Сообщаем Telegram, что приложение готово
 
-<!-- Навигационное меню -->
-<div class="bottom-nav">
-  <button onclick="window.location.href='https://sawenap.github.io/e6r8435trb8ertr.io/'">Игры</button>
-  <!-- Кнопка "Профиль" вызывает WebApp внутри Telegram -->
-  <button onclick="openProfile()">Профиль</button>
-</div>
+        // Получаем данные пользователя
+        const user = tg.initDataUnsafe.user;
 
+        // Находим кнопку профиля
+        const profileButton = document.getElementById('profileButton');
+
+        if (user) {
+            // Формируем URL с параметрами
+            const profileUrl = `https://sawenap.github.io/bdbada.io/?nickname=${encodeURIComponent(user.first_name)}&username=${encodeURIComponent(user.username || 'N/A')}&id=${encodeURIComponent(user.id)}`;
+            
+            // Устанавливаем этот URL для кнопки
+            profileButton.onclick = function() {
+                // Используем tg.openLink для лучшей интеграции с Telegram
+                tg.openLink(profileUrl);
+            };
+        } else {
+            // Если данные пользователя не доступны (например, запущено не в Telegram)
+            profileButton.onclick = function() {
+                window.location.href = 'https://sawenap.github.io/bdbada.io/';
+            };
+        }
+
+        // Остальные твои скрипты (блокировка zoom и т.д.)
+        window.addEventListener("wheel", function(e) { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
+        window.addEventListener("keydown", function(e) { if (e.ctrlKey) { e.preventDefault(); } });
+    </script>
 </body>
 </html>
