@@ -46,9 +46,8 @@
             
             // Устанавливаем этот URL для кнопки
             profileButton.onclick = function() {
-                // Используем tg.openLink для лучшей интеграции с Telegram
-                tg.openLink(profileUrl);
-            };
+    // Просто переходим по URL в текущем окне WebApp
+              window.location.href = profileUrl;};
         } else {
             // Если данные пользователя не доступны (например, запущено не в Telegram)
             profileButton.onclick = function() {
