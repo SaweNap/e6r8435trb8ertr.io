@@ -1,97 +1,300 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Казино</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script> <!-- Подключение Telegram WebApp -->
-    <style>
-        body { margin: 0; font-family: Arial, sans-serif; display: flex; flex-direction: column; height: 100vh; background-color: #2c2f33; color: #fff; overflow: hidden; background-image: url("https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/2313.png"); background-repeat: no-repeat; background-position: center; background-size: cover; }
-        .content_slot { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 2vw; position: relative; z-index: 1; margin: 10px 0; }
-        .image-button { background: none; border: none; padding: 0; cursor: pointer; outline: none; }
-        .image-button img { width: 30vw; max-width: 250px; height: auto; border-radius: 15px; display: block; }
-        @media (max-width: 400px) { 
-            .image-button img { width: 35vw; } 
-            .content { font-size: 4vw; } 
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Казино</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script> <!-- Подключение Telegram WebApp -->
+<style>
+    body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    color: #fff;
+    background-image: url("https://raw.githubusercontent.com/SaweNap/e6r8435trb8ertr.io/refs/heads/main/2313.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding-bottom: 80px; /* чтобы не накладывалось на фикс.бар */
+}
+    .content_slot {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2vw;
+        position: relative;
+        z-index: 1;
+        margin: 10px 0;
+    }
+    /* Обертки для групп кнопок */
+    .buttons-container, .buttons-container2, .buttons-container3, .buttons-container4, .buttons-container5 {
+        display: flex;
+        justify-content: center;
+        gap: 20px; 
+        padding: 20px 0;
+        margin-top: 50px;
+    }
+    .image-button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+    .image-button img {
+        width: 30vw;
+        max-width: 250px;
+        height: auto;
+        border-radius: 15px;
+        display: block;
+    }
+    @media (max-width: 400px) {
+        .image-button img {
+            width: 35vw;
         }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; display: flex; justify-content: center; align-items: center; padding: 10px 0; z-index: 999; background: rgba(44, 47, 51, 0.8); }
-        .bottom-nav button { background-color: #610000; color: #fff; border: none; padding: 12px 24px; margin: 0 20px; border-radius: 8px; cursor: pointer; font-size: 1.2em; transition: background-color 0.3s; }
-        .bottom-nav button:hover { background-color: #610000a4; }
-    </style>
+    }
+    /* Нижняя панель навигации */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+        z-index: 999;
+        gap: 75px;
+    }
+    .bottom-nav button {
+        background-color: #610000;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.2em;
+        transition: background-color 0.3s;
+    }
+    .bottom-nav button:hover {
+        background-color: #610000a4;
+    }
+
+    /* Окно для ставки */
+    #betContainer {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.8);
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 9999;
+    }
+    #betBox {
+        background: #000;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 300px;
+        width: 80%;
+    }
+    #betBox h2 {
+        color: #0ff;
+        margin-bottom: 15px;
+    }
+    #betInput {
+        font-size: 1.5em;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        width: 200px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    #startGameBtn {
+        padding: 10px 20px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 5px;
+        background: #0ff;
+        color: #000;
+        cursor: pointer;
+    }
+    #startGameBtn:hover {
+        background: #00cccc;
+    }
+</style>
 </head>
 <body>
-    <!-- Первая кнопка -->
+
+<!-- Группы кнопок -->
+<div class="buttons-container">
     <div class="content_slot">
         <button class="image-button" id="gameButton">
             <img src="https://raw.githubusercontent.com/SaweNap/sdkgdkgslot/refs/heads/main/off.jpg" alt="Перейти" />
         </button>
     </div>
-
-    <!-- Вторая кнопка -->
-    <div class="content_ruletka">
+    <div class="content_slot">
         <button class="image-button" id="gameButton2">
             <img src="https://raw.githubusercontent.com/SaweNap/djkfbsfjksdfruletka/refs/heads/main/off.jpg" alt="Перейти" />
         </button>
     </div>
+</div>
 
-    <!-- Навигационное меню -->
-    <div class="bottom-nav">
-        <button onclick="window.location.href='https://sawenap.github.io/e6r8435trb8ertr.io/'">Игры</button>
-        <button id="profileButton">Профиль</button>
-    </div>
+<div class="buttons-container2">
+  <div class="content_slot">
+      <button class="image-button" id="gameButton3">
+          <img src="https://raw.githubusercontent.com/SaweNap/dfkgdkfhgdkfgkubiki/refs/heads/main/off.jpg" alt="Перейти" />
+      </button>
+  </div>
+  <div class="content_slot">
+      <button class="image-button" id="gameButton4">
+          <img src="https://raw.githubusercontent.com/SaweNap/dfjgnndfjgjdfgbingo/refs/heads/main/off.jpg" alt="Перейти" />
+      </button>
+  </div>
+</div>
 
-    <script>
-        // Инициализация WebApp
-        const tg = window.Telegram.WebApp;
-        tg.ready();
+<div class="buttons-container3">
+  <div class="content_slot">
+      <button class="image-button" id="gameButton5">
+          <img src="https://raw.githubusercontent.com/SaweNap/dfjkhgdjkfgvbhjdfgsmolet/refs/heads/main/off.jpg" alt="Перейти" />
+      </button>
+  </div>
+  <div class="content_slot">
+      <button class="image-button" id="gameButton6">
+          <img src="https://raw.githubusercontent.com/SaweNap/fdmgdmnfgnmdfgpoker/refs/heads/main/off.jpg" alt="Перейти" />
+      </button>
+  </div>
+</div>
 
-        // Получаем данные пользователя
-        const user = tg.initDataUnsafe.user;
+<div class="buttons-container4">
+  <div class="content_slot">
+      <button class="image-button" id="gameButton7">
+          <img src="https://raw.githubusercontent.com/SaweNap/fbjdnfgjdfghhdfgdlotereya/refs/heads/main/off.jpg" alt="Перейти" />
+      </button>
+  </div>
+  <div class="content_slot">
+      <button class="image-button" id="gameButton8">
+          <img src="https://raw.githubusercontent.com/SaweNap/fgdngkdfgndkgjdgjdgblackjack/refs/heads/main/off.jpg" alt="Перейти" />
+      </button>
+  </div>
+</div>
 
-        // Обработка кнопки профиля
-        const profileButton = document.getElementById('profileButton');
+<div class="buttons-container5">
+  <div class="content_slot">
+      <button class="image-button" id="gameButton9">
+          <img src="https://raw.githubusercontent.com/SaweNap/dfjdhfjdshbfjsbfdjsfvsgfsjfjsdfkrestikinoliki/refs/heads/main/off.jpg" alt="Перейти" />
+      </button>
+  </div>
+  <div class="content_slot">
+      <button class="image-button" id="gameButton10">
+          <img src="https://raw.githubusercontent.com/SaweNap/dfjkghdjkgbdfgjhdfgdftgmolnya/refs/heads/main/off.jpg" alt="Перейти" />
+      </button>
+  </div>
+</div>
 
+<!-- Навигация -->
+<div class="bottom-nav">
+    <button onclick="window.location.href='https://sawenap.github.io/e6r8435trb8ertr.io/'">Игры</button>
+    <button id="profileButton">Профиль</button>
+</div>
+
+<!-- Окно для ставки -->
+<div id="betContainer">
+  <div id="betBox">
+    <h2>Введите сумму ставки</h2>
+    <input type="number" id="betInput" />
+    <br/>
+    <button id="startGameBtn">Начать игру</button>
+  </div>
+</div>
+
+<script>
+    // Инициализация WebApp
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    const user = tg.initDataUnsafe.user;
+
+    // Обработка кнопки профиля
+    const profileButton = document.getElementById('profileButton');
+    if (user) {
+        const profileUrl = `https://sawenap.github.io/bdbada.io/?nickname=${encodeURIComponent(user.first_name)}&username=${encodeURIComponent(user.username || 'N/A')}&id=${encodeURIComponent(user.id)}`;
+        profileButton.onclick = () => { window.location.href = profileUrl; };
+    } else {
+        profileButton.onclick = () => { window.location.href = 'https://sawenap.github.io/bdbada.io/'; };
+    }
+
+    // Обработчики для кнопок игр
+    const userId = user ? user.id : '';
+
+    const btns = [
+        { id: 'gameButton', url: 'https://sawenap.github.io/sdkgdkgslot/?id=' + encodeURIComponent(userId) },
+        { id: 'gameButton2', url: 'https://sawenap.github.io/sdkgdkgslot/?id=' + encodeURIComponent(userId) },
+        { id: 'gameButton3', url: 'https://sawenap.github.io/sdkgdkgslot/?id=' + encodeURIComponent(userId) },
+        { id: 'gameButton4', url: 'https://sawenap.github.io/sdkgdkgslot/?id=' + encodeURIComponent(userId) },
+        { id: 'gameButton5', url: 'https://sawenap.github.io/dfjdhfjdshbfjsbfdjsfvsgfsjfjsdfkrestikinoliki/?id=' + encodeURIComponent(userId) },
+        { id: 'gameButton6', url: 'https://sawenap.github.io/dfjdhfjdshbfjsbfdjsfvsgfsjfjsdfkrestikinoliki/?id=' + encodeURIComponent(userId) },
+        { id: 'gameButton7', url: 'https://sawenap.github.io/fgdngkdfgndkgjdgjdgblackjack/?id=' + encodeURIComponent(userId) },
+        { id: 'gameButton8', url: 'https://sawenap.github.io/fgdngkdfgndkgjdgjdgblackjack/?id=' + encodeURIComponent(userId) },
+        { id: 'gameButton9', url: 'https://sawenap.github.io/dfjdhfjdshbfjsbfdjsfvsgfsjfjsdfkrestikinoliki/?id=' + encodeURIComponent(userId) },
+        { id: 'gameButton10', url: 'https://sawenap.github.io/dfjkghdjkgbdfgjhdfgdftgmolnya/?id=' + encodeURIComponent(userId) },
+    ];
+
+    btns.forEach(b => {
+        const btn = document.getElementById(b.id);
         if (user) {
-            // Формируем URL с параметрами
-            const profileUrl = `https://sawenap.github.io/bdbada.io/?nickname=${encodeURIComponent(user.first_name)}&username=${encodeURIComponent(user.username || 'N/A')}&id=${encodeURIComponent(user.id)}`;
-            profileButton.onclick = function() {
-                window.location.href = profileUrl;
-            };
+            btn.onclick = () => { window.location.href = b.url; };
         } else {
-            profileButton.onclick = function() {
-                window.location.href = 'https://sawenap.github.io/bdbada.io/';
-            };
+            btn.onclick = () => { window.location.href = b.url.replace('?id=', '/'); }; // Без id, если не авторизован
+        }
+    });
+
+    // Обработка ставки
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userIdParam = urlParams.get('id');
+
+        let currentUserBalance = 0;
+        if (userIdParam) {
+            fetch('https://raw.githubusercontent.com/SaweNap/dfjghdfifgJSON/main/users.json')
+                .then(res => res.ok ? res.json() : Promise.reject())
+                .then(users => {
+                    const user = users.find(u => u.id.toString() === userIdParam.toString());
+                    if (user) {
+                        currentUserBalance = user.balance || 0;
+                        // показываем окно ставки
+                        document.getElementById('betContainer').style.display = 'flex';
+                        window._gameUser = { id: user.id, balance: currentUserBalance };
+                    } else {
+                        alert('Пользователь не найден');
+                    }
+                })
+                .catch(() => alert('Ошибка загрузки данных'));
         }
 
-        // Обработка первой кнопки
-        const gameBtn = document.getElementById('gameButton');
+        document.getElementById('startGameBtn').onclick = () => {
+            const bet = parseFloat(document.getElementById('betInput').value);
+            if (isNaN(bet) || bet <= 0) {
+                alert('Введите корректную сумму ставки');
+                return;
+            }
+            if (bet > currentUserBalance) {
+                alert('Недостаточно средств');
+                return;
+            }
+            alert(`Игра началась со ставкой ${bet}₽, баланс: ${currentUserBalance}₽`);
+            // Тут можно запустить игру или сделать редирект
+            document.getElementById('betContainer').style.display = 'none';
+        };
+    })();
 
-        if (user) {
-            gameBtn.onclick = function() {
-                window.location.href = 'https://sawenap.github.io/sdkgdkgslot/?id=' + encodeURIComponent(user.id);
-            };
-        } else {
-            gameBtn.onclick = function() {
-                window.location.href = 'https://sawenap.github.io/sdkgdkgslot/';
-            };
-        }
+    // Блокировка колесика и Ctrl+ для предотвращения масштабирования
+    window.addEventListener("wheel", e => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
+    window.addEventListener("keydown", e => { if (e.ctrlKey) e.preventDefault(); });
+</script>
 
-        // Обработка второй кнопки
-        const gameBtn2 = document.getElementById('gameButton2');
-
-        if (user) {
-            gameBtn2.onclick = function() {
-                window.location.href = 'https://sawenap.github.io/sdkgdkgslot/?id=' + encodeURIComponent(user.id);
-            };
-        } else {
-            gameBtn2.onclick = function() {
-                window.location.href = 'https://sawenap.github.io/sdkgdkgslot/';
-            };
-        }
-
-        // Блокировка масштабирования колесом и клавишей
-        window.addEventListener("wheel", function(e) { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
-        window.addEventListener("keydown", function(e) { if (e.ctrlKey) { e.preventDefault(); } });
-    </script>
 </body>
 </html>
